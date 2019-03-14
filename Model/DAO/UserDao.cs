@@ -20,9 +20,13 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
-        public bool Login(String userName,string password)
+        public User GetById(string userName )
         {
-            var result = db.Users.Count(x => x.UserName == userName && x.Password == password);
+            return db.Users.SingleOrDefault(x => x.UserName == userName);
+        }
+        public bool Login(String userName,string passWord)
+        {
+            var result = db.Users.Count(x => x.UserName == userName && x.Password == passWord);
             if (result > 0)
             {
                 return true;
