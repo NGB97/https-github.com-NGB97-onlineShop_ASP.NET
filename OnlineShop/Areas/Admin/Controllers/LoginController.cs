@@ -23,7 +23,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.UserName, model.Password);
+                var result = dao.Login(model.UserName,Encryptor.MD5Hash(model.Password));
                 if (result)
                 {
                     var user = dao.GetById(model.UserName);
