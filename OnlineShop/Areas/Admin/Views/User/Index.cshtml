@@ -1,4 +1,7 @@
-﻿@{
+﻿@model PagedList.IPagedList<Model.EF.User>
+@using PagedList.Mvc;
+
+@{
     ViewBag.Title = "Quản lý người dùng";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
@@ -6,3 +9,38 @@
 @section header {
     Danh sách người dùng
 }
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Tài Khoản</th>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Adress</th>
+                      
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="~/User/Edit/@item.ID">Sửa</a>
+                                <a href="~/User/Delete/@item.ID">Xóa</a>
+                            </td>
+                            <td>@item.UserName</td>
+                            <td>@item.Name</td>
+                            <td>@item.Email</td>
+                            <td>@item.Address</td>
+                            
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model,Page => Url.Action("Index",new { Page }))
+        </div>
+    </div>
+</div>

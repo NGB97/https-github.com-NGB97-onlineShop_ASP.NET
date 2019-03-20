@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Model.EF;
-
+using PagedList;
 namespace Model.DAO
 {
     public class UserDao
@@ -20,6 +20,12 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
+        //IEnumerable khai bao 1 danh sach, tao phan trang
+        public IEnumerable <User> ListAllPaging(int page,int pageSize)
+        {
+            return db.Users.OrderByDescending(x=>x.CreatedDate).ToPagedList(page,pageSize);
+        }
+
         public User GetById(string userName )
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
