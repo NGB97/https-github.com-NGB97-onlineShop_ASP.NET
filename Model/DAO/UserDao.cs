@@ -20,6 +20,30 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.ID;
         }
+        public bool Update(User entity)
+        {
+            try
+            {
+                var user = db.Users.Find(entity.ID);
+                user.Name = entity.Name;
+                if(!string.IsNullOrEmpty(entity.Password))
+                {
+                    user.Password = entity.Password;
+                }
+                user.Address = entity.Address;
+                user.Email = entity.Email;
+                user.ModifiedBy = entity.ModifiedBy;
+                user.ModifiedDate = DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            
+        }
+
         //IEnumerable khai bao 1 danh sach, tao phan trang
         public IEnumerable <User> ListAllPaging(int page,int pageSize)
         {
@@ -29,6 +53,10 @@ namespace Model.DAO
         public User GetById(string userName )
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
+        }
+        public User ViewDetail(int id)
+        {
+            return db.Users.Find(id);
         }
         public bool Login(String userName,string passWord)
         {

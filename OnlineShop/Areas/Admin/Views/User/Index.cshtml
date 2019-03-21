@@ -18,29 +18,31 @@
                         <th>#</th>
                         <th>Tài Khoản</th>
                         <th>Tên</th>
+                        <th>Phone</th>
                         <th>Email</th>
                         <th>Adress</th>
-                      
+
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                <a href="~/User/Edit/@item.ID">Sửa</a>
-                                <a href="~/User/Delete/@item.ID">Xóa</a>
-                            </td>
-                            <td>@item.UserName</td>
-                            <td>@item.Name</td>
-                            <td>@item.Email</td>
-                            <td>@item.Address</td>
-                            
-                        </tr>
+                    <tr>
+                        <td>
+                            <a href="~/Admin/User/Edit/@item.ID">Sửa</a>
+                            <a href="~/Admin/User/Delete/@item.ID">Xóa</a>
+                        </td>
+                        <td>@item.UserName</td>
+                        <td>@item.Name</td>
+                        <td>@item.Phone</td>
+                        <td>@item.Email</td>
+                        <td>@item.Address</td>
+
+                    </tr>
                     }
                 </tbody>
             </table>
-            @Html.PagedListPager(Model,Page => Url.Action("Index",new { Page }))
+                @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }))
         </div>
     </div>
 </div>
