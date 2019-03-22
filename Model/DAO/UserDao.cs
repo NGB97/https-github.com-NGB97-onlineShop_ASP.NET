@@ -37,7 +37,7 @@ namespace Model.DAO
                 db.SaveChanges();
                 return true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }
@@ -45,9 +45,15 @@ namespace Model.DAO
         }
 
         //IEnumerable khai bao 1 danh sach, tao phan trang
-        public IEnumerable <User> ListAllPaging(int page,int pageSize)
+        public IEnumerable <User> ListAllPaging(string seachString,int page,int pageSize)
         {
-            return db.Users.OrderByDescending(x=>x.CreatedDate).ToPagedList(page,pageSize);
+            IQueryable<User> model = db.Users;
+            if(!string.IsNullOrEmpty(seachString))
+            {
+                model = model.Where(x => x.UserName.Contains(seachString) || x.Name.Contains(seachString));
+            }
+            // chi can them if de them dieu kien tim kiem
+            return model.OrderByDescending(x => x.CreatedDate).ToPagedList(page,pageSize);
         }
 
         public User GetById(string userName )
@@ -69,6 +75,22 @@ namespace Model.DAO
             {
                 return false;
             }
+        }
+        public bool Delete(int id)
+        {
+            try
+            {
+                var user = db.Users.Find(id);
+                db.Users.Remove(user);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            
+
         }
     }
 }

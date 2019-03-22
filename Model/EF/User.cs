@@ -27,7 +27,7 @@
         public string Name { get; set; }
 
         [StringLength(50)]
-        [Display(Name = "Địa Chĩ")]
+        [Display(Name = "Địa Chỉ")]
         public string Address { get; set; }
 
         [StringLength(50)]

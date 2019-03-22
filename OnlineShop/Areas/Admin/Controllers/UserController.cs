@@ -6,9 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Model.EF;
-using Model.DAO;
-using OnlineShop.Common;
 using PagedList;
 
 namespace OnlineShop.Areas.Admin.Controllers
@@ -16,10 +13,11 @@ namespace OnlineShop.Areas.Admin.Controllers
     public class UserController : Controller
     {
         // GET: Admin/User
-        public ActionResult Index(int page = 1,int pageSize = 1)
+        public ActionResult Index(string searchString ,int page = 1,int pageSize = 1)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(page, pageSize);
+            var model = dao.ListAllPaging(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
             return View(model);
         }
 
@@ -78,6 +76,12 @@ namespace OnlineShop.Areas.Admin.Controllers
                 }
             }
             return View("Index");
+        }
+        [HttpDelete]
+        public ActionResult Delete(int id)
+        {
+            new UserDao().Delete(id);
+            return RedirectToAction("Index","User");
         }
     }
 }
